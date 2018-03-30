@@ -640,12 +640,12 @@ def train():
         model = default_categorical()
         hist = model.fit_generator(
                             train_gen, 
-                            steps_per_epoch=11, 
+                            steps_per_epoch=steps_per_epoch, 
                             epochs=EPOCHS, 
                             verbose=1, 
                             validation_data=val_gen,
                             callbacks=callbacks_list, 
-                            validation_steps=11*(1.0 - TRAINING_SPLIT))
+                            validation_steps=steps_per_epoch*(1.0 - TRAINING_SPLIT))
         print('Training complete.')
         
     except Exception as e:

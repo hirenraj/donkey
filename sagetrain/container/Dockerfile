@@ -1,7 +1,7 @@
 # docker-keras - Keras in Docker with Python 3 and TensorFlow on GPU
 
-FROM gw000/debian-cuda:8.0_6.0
-MAINTAINER gw0 [http://gw.tnode.com/] <gw.2017@ena.one>
+FROM gw000/debian-cuda:9.1_7.0
+MAINTAINER gw0 [http://gw.tnode.com/] <gw.2018@ena.one>
 
 # install debian packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -31,12 +31,15 @@ RUN apt-get update -qq \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-ARG TENSORFLOW_VERSION=1.4.0
+# manually update numpy
+RUN pip3 --no-cache-dir install -U numpy==1.13.3
+
+ARG TENSORFLOW_VERSION=1.5.0
 ARG TENSORFLOW_DEVICE=gpu
 ARG TENSORFLOW_APPEND=_gpu
 RUN pip3 --no-cache-dir install https://storage.googleapis.com/tensorflow/linux/${TENSORFLOW_DEVICE}/tensorflow${TENSORFLOW_APPEND}-${TENSORFLOW_VERSION}-cp35-cp35m-linux_x86_64.whl
 
-ARG KERAS_VERSION=2.1.1
+ARG KERAS_VERSION=2.1.4
 ENV KERAS_BACKEND=tensorflow
 RUN pip3 --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION} && pip3 install pandas Pillow
 
