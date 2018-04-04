@@ -1,3 +1,9 @@
+%%sh
+
+# Update the image variable with your Robocar name
+image=pinkysbrain1
+cd sagetrain/container
+
 #!/usr/bin/env bash
 
 # This script shows how to build the Docker image and push it to ECR to be ready for use
@@ -5,8 +11,6 @@
 
 # The argument to this script is the image name. This will be used as the image on the local
 # machine and combined with the account and region to form the repository name for ECR.
-
-image=$1
 
 if [ "$image" == "" ]
 then
@@ -24,18 +28,14 @@ then
     exit 255
 fi
 
-
 # Get the region defined in the current configuration (default to us-west-2 if none defined)
 region=$(aws configure get region)
 region=${region:-us-west-2}
 
-
 fullname="${account}.dkr.ecr.${region}.amazonaws.com/${image}:latest"
 
 # If the repository doesn't exist in ECR, create it.
-
 aws ecr describe-repositories --repository-names "${image}" > /dev/null 2>&1
-
 if [ $? -ne 0 ]
 then
     aws ecr create-repository --repository-name "${image}" > /dev/null
@@ -53,7 +53,11 @@ if [ -d "/home/ec2-user/SageMaker" ]; then
   sudo service docker restart
 fi
 
+# Build your Docker image using the following command.
 sudo docker build  -t ${image} .
+
+# After the build completes, tag your image so you can push the image to this repository:
 sudo docker tag ${image} ${fullname}
 
+# push this image to your newly created AWS repository:
 sudo docker push ${fullname}
