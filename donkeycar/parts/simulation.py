@@ -192,7 +192,7 @@ class SquareBoxCamera:
     This can be used to test if a learning algorithm can learn.
     """
 
-    def __init__(self, resolution=(120,160), box_size=4, color=(255, 0, 0)):
+    def __init__(self, resolution=(160,120), box_size=4, color=(255, 0, 0)):
         self.resolution = resolution
         self.box_size = box_size
         self.color = color
