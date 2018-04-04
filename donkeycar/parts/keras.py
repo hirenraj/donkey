@@ -151,7 +151,7 @@ def default_categorical():
     from keras.layers import Convolution2D, MaxPooling2D, Reshape, BatchNormalization
     from keras.layers import Activation, Dropout, Flatten, Dense
     
-    img_in = Input(shape=(160, 120, 3), name='img_in')                      # First layer, input layer, Shape comes from camera.py resolution, RGB
+    img_in = Input(shape=(120, 120, 3), name='img_in')                      # First layer, input layer, Shape comes from camera.py resolution, RGB
     x = img_in
     x = Convolution2D(24, (5,5), strides=(2,2), activation='relu')(x)       # 24 features, 5 pixel x 5 pixel kernel (convolution, feauture) window, 2wx2h stride, relu activation
     x = Convolution2D(32, (5,5), strides=(2,2), activation='relu')(x)       # 32 features, 5px5p kernel window, 2wx2h stride, relu activatiion
@@ -188,7 +188,7 @@ def default_linear():
     from keras.layers import Convolution2D, MaxPooling2D, Reshape, BatchNormalization
     from keras.layers import Activation, Dropout, Flatten, Dense
     
-    img_in = Input(shape=(160,120,3), name='img_in')
+    img_in = Input(shape=(120,160,3), name='img_in')
     x = img_in
     x = Convolution2D(24, (5,5), strides=(2,2), activation='relu')(x)
     x = Convolution2D(32, (5,5), strides=(2,2), activation='relu')(x)
@@ -225,7 +225,7 @@ def default_n_linear(num_outputs):
     from keras.layers import Convolution2D, MaxPooling2D, Reshape, BatchNormalization
     from keras.layers import Activation, Dropout, Flatten, Cropping2D, Lambda
     
-    img_in = Input(shape=(160,120,3), name='img_in')
+    img_in = Input(shape=(120,160,3), name='img_in')
     x = img_in
     x = Cropping2D(cropping=((60,0), (0,0)))(x) #trim 60 pixels off top
     x = Lambda(lambda x: x/127.5 - 1.)(x) # normalize and re-center
@@ -267,7 +267,7 @@ def default_imu(num_outputs, num_imu_inputs):
     from keras.layers import Activation, Dropout, Flatten, Cropping2D, Lambda
     from keras.layers.merge import concatenate
     
-    img_in = Input(shape=(160,120,3), name='img_in')
+    img_in = Input(shape=(120,160,3), name='img_in')
     imu_in = Input(shape=(num_imu_inputs,), name="imu_in")
     
     x = img_in
