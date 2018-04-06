@@ -12,11 +12,11 @@ cd sagetrain/container
 # The argument to this script is the image name. This will be used as the image on the local
 # machine and combined with the account and region to form the repository name for ECR.
 
-if [ "$image" == "" ]
-then
-    echo "Usage: $0 <image-name>"
-    exit 1
-fi
+# if [ "$image" == "" ]
+#then
+#    echo "Usage: $0 <image-name>"
+#    exit 1
+#fi
 
 chmod +x customkeras/train
 
